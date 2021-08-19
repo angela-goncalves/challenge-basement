@@ -8,11 +8,11 @@ interface ProductProps {
 }
 const Product: FC<ProductProps> = ({title, image, price}) => {
   return (
-    <div>
-      <Image alt={title} height={500} src={image} width={500} />
-      <div className="flex">
+    <div className="h-full flex flex-col justify-between">
+      <Image alt={title} height={550} src={image} width={450} />
+      <div className="flex justify-between border-t-2 pt-2">
         <h3>{title}</h3>
-        <p>{price}</p>
+        <p>${price}</p>
       </div>
     </div>
   );
