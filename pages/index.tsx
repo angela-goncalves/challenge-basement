@@ -11,20 +11,21 @@ const Home: NextPage = () => {
     <div className="h-full bg-black">
       <Navbar />
       <header className="m-auto text-white text-center">
-        <div className="max-w-full px-4">
-          <Image alt="" className="w-full h-full" src={imageheader} />
+        <div className="max-w-full mx-4 md:mx-8">
+          <Image alt="basement-supply" className="w-full h-full" src={imageheader} />
         </div>
       </header>
-      <main />
-      {data.map((product) => {
-        const {title, image, id, price} = product;
+      <main className="grid md:grid-cols-3 mx-4 space-x-4 md:space-x-8">
+        {data.map((product) => {
+          const {title, image, id, price} = product;
 
-        return (
-          <div key={id} className="grid grid-cols-3">
-            <Product image={image} price={price} title={title} />
-          </div>
-        );
-      })}
+          return (
+            <div key={id}>
+              <Product image={image} price={price} title={title} />
+            </div>
+          );
+        })}
+      </main>
     </div>
   );
 };
