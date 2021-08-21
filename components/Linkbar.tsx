@@ -1,11 +1,8 @@
-export default function Linkbar() {
-  const handleOnChange = (e: any) => {
-    const inputBar = e.target.value;
-
-    console.log(e.target.value);
-    fetch("product/mock.json").then((data) => console.log(data));
-  };
-
+import React, {FC} from "react";
+interface LinkbarProps {
+  handleOnChange: any;
+}
+const Linkbar: FC<LinkbarProps> = ({handleOnChange}) => {
   return (
     <form className="md:hidden bg-inputPlace flex justify-center p-3 w-full">
       <input
@@ -16,4 +13,6 @@ export default function Linkbar() {
       />
     </form>
   );
-}
+};
+
+export default Linkbar;

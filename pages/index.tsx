@@ -1,5 +1,6 @@
 import type {NextPage} from "next";
 import Image from "next/image";
+import React, {useState} from "react";
 
 import Linkbar from "../components/Linkbar";
 import footer from "../public/footer.svg";
@@ -9,9 +10,20 @@ import Product from "../components/Product";
 import Navbar from "../components/Navbar";
 
 const Home: NextPage = () => {
+  // const [merchandise, setMerchandise] = useState(() => {
+  //   const response = await fetch("/api/products");
+  //   const data = await response.json();
+  // });
+
+  const handleOnChange = async (e: any) => {
+    const inputBar = e.target.value;
+
+    // data.filter((each) => each.include(e.target.value));
+  };
+
   return (
     <div className="h-full bg-black">
-      <Linkbar />
+      <Linkbar handleOnChange={handleOnChange} />
       <Navbar />
       <header className="m-auto text-white text-center">
         <div className="max-w-full mx-4 md:mx-8">
