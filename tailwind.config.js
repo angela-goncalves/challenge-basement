@@ -18,7 +18,10 @@ module.exports = {
     }),
   },
   variants: {
-    extend: {},
+    extend: {
+      borderRadius: ["hover", "focus"],
+      borderWidth: ["hover", "focus"],
+    },
   },
   plugins: [
     require("@tailwindcss/forms"),

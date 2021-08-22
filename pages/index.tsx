@@ -1,6 +1,6 @@
 import type {NextPage} from "next";
 import Image from "next/image";
-import React, {useState} from "react";
+// import React, {useState} from "react";
 
 import Linkbar from "../components/Linkbar";
 import footer from "../public/footer.svg";
@@ -8,7 +8,7 @@ import imageheader from "../public/header.svg";
 import data from "../product/mock.json";
 import Product from "../components/Product";
 import Navbar from "../components/Navbar";
-
+import Cart from "../components/Cart";
 const Home: NextPage = () => {
   // const [merchandise, setMerchandise] = useState(() => {
   //   const response = await fetch("/api/products");
@@ -26,8 +26,8 @@ const Home: NextPage = () => {
       <Linkbar handleOnChange={handleOnChange} />
       <Navbar />
       <header className="m-auto text-white text-center">
-        <div className="max-w-full mx-4 md:mx-8">
-          <Image alt="basement-supply" className="w-full h-full" src={imageheader} />
+        <div className="mx-4 md:m-0">
+          <Image alt="basement-supply" src={imageheader} />
         </div>
       </header>
       <div className="border-t-2 border-b-2 mt-2  mb-12 md:mt-14 md:mb-24 ">
@@ -44,8 +44,9 @@ const Home: NextPage = () => {
           );
         })}
       </main>
+      <Cart />
       <footer className="mx-4 mt-12 md:mx-8 md:mt-14">
-        <Image alt="" src={footer} />
+        <Image alt="wear everyday" src={footer} />
       </footer>
     </div>
   );
