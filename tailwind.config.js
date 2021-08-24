@@ -3,10 +3,12 @@ module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
-    textColor: {
-      textInput: "rgba(131, 229, 118, 1)",
+    extend: {
+      textColor: {
+        textInput: "rgba(131, 229, 118, 1)",
+      },
     },
+
     placeholderColor: (theme) => ({
       ...theme("colors"),
       placeholder: "rgba(131, 229, 118, 1)",

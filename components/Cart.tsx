@@ -1,32 +1,40 @@
 import Image from "next/image";
+import React, {FC} from "react";
 
+import close from "../public/close.svg";
 import yourCart from "../public/yourCart.svg";
 import yourcart from "../public/your-cart.svg";
-import closemodal from "../public/close.svg";
 
-import shirt from ".//../public/products/shirt.png";
-export default function Cart() {
+// import shirt from ".//../public/products/shirt.png";
+interface CartProps {
+  title: string;
+  image: string;
+  price: number;
+  setOpen: any;
+  description: string;
+}
+const Cart: FC<CartProps> = ({title, image, price, setOpen, description}) => {
   return (
-    <div className="md:p-6 flex flex-col justify-center w-full md:max-w-4xl ">
-      <button className="self-end mt-5 mr-4 md:mt-10 md:mr-0">
-        <Image alt="your-cart" src={closemodal} />
+    <div className="md:px-8 md:pt-8 flex flex-col justify-center md:border-l-2 md:border-b-2 ">
+      <button className="text-right mt-5 mr-4" type="button" onClick={() => setOpen(false)}>
+        <Image alt="close" src={close} />
       </button>
-      <div className="my-5 md:my-12 text-center ">
+      <div className="md:my-12 text-center ">
         <div className="hidden lg:block">
           <Image alt="your-cart" src={yourCart} />
         </div>
-        <div className="lg:hidden">
-          <Image alt="your-cart" className="lg:hidden" src={yourcart} />
+        <div className="lg:hidden px-4">
+          <Image alt="your-cart" height={250} src={yourcart} width={400} />
         </div>
       </div>
       <div className="flex md:space-x-3 border-2 mx-4 md:m-0 ">
         <div className="w-full md:w-64">
-          <Image alt="{title}" height={500} src={shirt} width={400} />
+          <Image alt={title} height={500} src={image} width={400} />
         </div>
         <div className="w-full flex flex-col justify-between md:p-3 space-y-4">
           <div className="flex flex-col w-full">
-            <h3 className="font-bold text-sm md:text-4xl my-2">BLACK T-SHIRT</h3>
-            <p className="text-gray-400 text-xs md:text-xl">description</p>
+            <h3 className="font-bold text-sm md:text-4xl my-2">{title}</h3>
+            <p className="text-gray-300 text-xs md:text-xl">{description}</p>
           </div>
           <div className="flex flex-col md:flex-row justify-between">
             <div className="md:pb-3 space-y-2">
@@ -56,10 +64,21 @@ export default function Cart() {
                 </div>
               </div>
             </div>
-            <p className="text-lg md:text-4xl md:self-end">$price</p>
+            <p className="text-lg md:text-4xl md:self-end">${price}</p>
           </div>
+        </div>
+      </div>
+      <div className="w-full flex flex-col mt-52 md:mt-60 md:flex-row md:items-center md:border-t-2">
+        <div className="w-full flex justify-between items-center text-xl px-4 ">
+          <h3 className="md:py-6 md:pl-8 md:text-4xl">Total:</h3>
+          <p className="md:text-4xl">${price}</p>
+        </div>
+        <div className="text-5xl font-bold md:text-4xl text-center border-t-2 md:border-l-2 md:border-0 pt-2 md:px-8">
+          CHECKOUT
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Cart;
