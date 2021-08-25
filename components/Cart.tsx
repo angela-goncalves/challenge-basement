@@ -12,11 +12,25 @@ interface CartProps {
   price: number;
   setOpen: any;
   description: string;
+  lessProduct: any;
+  addProduct: any;
+  counter: number;
+  toCheckout: any;
 }
-const Cart: FC<CartProps> = ({title, image, price, setOpen, description}) => {
+const Cart: FC<CartProps> = ({
+  counter,
+  title,
+  image,
+  price,
+  setOpen,
+  description,
+  lessProduct,
+  addProduct,
+  toCheckout,
+}) => {
   return (
-    <div className="md:px-8 md:pt-8 flex flex-col justify-center md:border-l-2 md:border-b-2 ">
-      <button className="text-right mt-5 mr-4" type="button" onClick={() => setOpen(false)}>
+    <div className="md:px-8 md:pt-8 flex flex-col justify-center md:border-l-2 md:border-b-2 overscroll-contain overflow-y-scroll">
+      <button className="text-right mt-5 mr-4 " type="button" onClick={() => setOpen(false)}>
         <Image alt="close" src={close} />
       </button>
       <div className="md:my-12 text-center ">
@@ -41,9 +55,9 @@ const Cart: FC<CartProps> = ({title, image, price, setOpen, description}) => {
               <div className="flex items-center space-x-3 md:justify-between ">
                 <p className="text-xs md:text-xl">QUANTITY:</p>
                 <div className="px-2 py-1 space-x-4 flex justify-between border-2 rounded-full text-xs md:text-xl">
-                  <button>-</button>
-                  <p>n</p>
-                  <button>+</button>
+                  <button onClick={lessProduct}>-</button>
+                  <p>{counter}</p>
+                  <button onClick={addProduct}>+</button>
                 </div>
               </div>
               <div className="h-6 flex items-center space-x-5 text-xs md:text-xl w-full ">
@@ -71,11 +85,14 @@ const Cart: FC<CartProps> = ({title, image, price, setOpen, description}) => {
       <div className="w-full flex flex-col mt-52 md:mt-60 md:flex-row md:items-center md:border-t-2">
         <div className="w-full flex justify-between items-center text-xl px-4 ">
           <h3 className="md:py-6 md:pl-8 md:text-4xl">Total:</h3>
-          <p className="md:text-4xl">${price}</p>
+          <p className="md:text-4xl">${Math.round(price) * counter}</p>
         </div>
-        <div className="text-5xl font-bold md:text-4xl text-center border-t-2 md:border-l-2 md:border-0 pt-2 md:px-8">
+        <button
+          className="text-5xl font-bold md:text-4xl text-center border-t-2 md:border-l-2 md:border-0 pt-2 md:px-8"
+          onClick={toCheckout}
+        >
           CHECKOUT
-        </div>
+        </button>
       </div>
     </div>
   );

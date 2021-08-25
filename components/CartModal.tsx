@@ -12,7 +12,7 @@ const CartModal: FC<CartModalProps> = ({open, setOpen, children}) => {
   return (
     <Transition.Root as={Fragment} show={open}>
       <Dialog as="div" className="fixed inset-0" onClose={setOpen}>
-        <div className="absolute inset-0 overscroll-contain overflow-y-auto">
+        <div className="absolute inset-0">
           <Transition.Child
             as={Fragment}
             enter="ease-in-out duration-500"

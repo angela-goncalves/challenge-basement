@@ -8,9 +8,29 @@ interface ProductProps {
   image: string;
   price: number;
   description: string;
+  lessProduct: any;
+  addProduct: any;
+  counter: number;
+  setList: any;
+  productList: any;
 }
-const Product: FC<ProductProps> = ({title, image, price, description}) => {
+const Product: FC<ProductProps> = ({
+  title,
+  image,
+  price,
+  description,
+  lessProduct,
+  addProduct,
+  counter,
+  setList,
+  productList,
+}) => {
   const [open, setOpen] = useState(false);
+
+  const toCheckout = (counter: number) => {
+    setList((prev: any) => [...prev, {title, description, price, counter, total: price * counter}]);
+    console.log(setList);
+  };
 
   return (
     <div className="h-full">
@@ -31,11 +51,15 @@ const Product: FC<ProductProps> = ({title, image, price, description}) => {
       <div>
         <CartModal open={open} setOpen={setOpen}>
           <Cart
+            addProduct={addProduct}
+            counter={counter}
             description={description}
             image={image}
+            lessProduct={lessProduct}
             price={price}
             setOpen={setOpen}
             title={title}
+            toCheckout={toCheckout}
           />
         </CartModal>
       </div>
