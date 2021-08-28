@@ -1,10 +1,11 @@
 import Image from "next/image";
 import React, {FC} from "react";
 
-import CartProduct from "../components/CartProduct";
 import close from "../public/close.svg";
 import yourCart from "../public/yourCart.svg";
 import yourcart from "../public/your-cart.svg";
+
+import ProductCart from "./ProductCart";
 
 interface CartProps {
   setOpen: any;
@@ -35,7 +36,7 @@ const Cart: FC<CartProps> = ({setOpen, less, add, cart}) => {
 
           return (
             <div key={Date.now()}>
-              <CartProduct
+              <ProductCart
                 add={add}
                 counter={counter}
                 description={description}
