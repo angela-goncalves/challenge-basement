@@ -31,3 +31,6 @@ npm run dev
 
 ## Modalidad de entrega
 * Repositorio público subido a GitHub, Gitlab, Bitbucket.
+
+I coudn't send it before tuesday because I had problems in bring the data, not because I didnt know how to bring it from 
+the mock, but I could use something with nextj 
