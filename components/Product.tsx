@@ -1,12 +1,15 @@
 import Image from "next/image";
 import React, {FC} from "react";
+
 interface ProductProps {
   title: string;
   image: string;
   price: number;
-  description: string;
+  id: number;
+  cart: any;
   counter: number;
-  setCart: any;
+  description: string;
+  addToCart: any;
   setOpen: any;
 }
 const Product: FC<ProductProps> = ({
@@ -14,18 +17,19 @@ const Product: FC<ProductProps> = ({
   image,
   price,
   description,
-  counter,
+  id,
   setOpen,
-  setCart,
+  addToCart,
+  counter,
 }) => {
-  const handleOnClick = (counter: number) => {
-    setCart((prev: any) => [...prev, {title, description, image, price, total: counter * price}]);
+  const handleOnClick = () => {
+    addToCart({title, image, price, description, id, counter});
     setOpen(true);
   };
 
   return (
     <div className="h-full">
-      <button className="h-full" onClick={() => handleOnClick(counter)}>
+      <button className="h-full" onClick={() => handleOnClick()}>
         <div className="h-full flex flex-col justify-between">
           <Image alt={title} height={550} src={image} width={450} />
           <div className="flex justify-between border-t-2 pt-2">

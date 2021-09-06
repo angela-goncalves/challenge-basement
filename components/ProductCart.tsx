@@ -6,21 +6,32 @@ interface ProductCartProps {
   price: number;
   description: string;
   image: string;
-  counter: number;
-  less: any;
-  add: any;
+  addToCart: any;
   total: number;
+  id: number;
+  counter: number;
+  setCounter: any;
 }
 const ProductCart = ({
   title,
   description,
   price,
-  counter,
+  id,
   image,
-  less,
-  add,
-  total,
+  counter,
+  setCounter,
+  addToCart,
 }: ProductCartProps) => {
+  const less = () => {
+    if (counter === 1) {
+      return;
+    }
+    addToCart({title, image, price, id, description, counter: counter - 1});
+  };
+  const add = () => {
+    addToCart({title, image, price, id, description, counter: counter + 1});
+  };
+
   return (
     <>
       <div className="flex md:space-x-3 border-2 mx-4 md:m-0 ">
@@ -29,7 +40,7 @@ const ProductCart = ({
         </div>
         <div className="w-full flex flex-col justify-between md:p-3 space-y-4">
           <div className="flex flex-col w-full">
-            <h3 className="font-bold text-sm md:text-4xl my-2">{title}</h3>
+            <h3 className="font-bold text-lg md:text-4xl my-2">{title}</h3>
             <p className="text-gray-300 text-xs md:text-xl">{description}</p>
           </div>
           <div className="flex flex-col md:flex-row justify-between">
@@ -63,15 +74,6 @@ const ProductCart = ({
             <p className="text-lg md:text-4xl md:self-end">${price}</p>
           </div>
         </div>
-      </div>
-      <div className="w-full flex flex-col mt-52 md:mt-60 md:flex-row md:items-center md:border-t-2">
-        <div className="w-full flex justify-between items-center text-xl px-4 ">
-          <h3 className="md:py-6 md:pl-8 md:text-4xl">Total:</h3>
-          <p className="md:text-4xl">${Math.round(total) + counter}</p>
-        </div>
-        <button className="text-5xl font-bold md:text-4xl text-center border-t-2 md:border-l-2 md:border-0 pt-2 md:px-8">
-          CHECKOUT
-        </button>
       </div>
     </>
   );

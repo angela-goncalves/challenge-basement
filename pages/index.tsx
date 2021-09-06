@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   const [counter, setCounter] = useState(1);
   const [open, setOpen] = useState(false);
   const [getList, setList] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<any>([]);
 
   useEffect(() => {
     const productData = async () => {
@@ -25,27 +25,43 @@ const Home: NextPage = () => {
 
     productData();
   }, []);
-  const add = () => {
-    setCounter(counter + 1);
-  };
-  const less = () => {
-    if (counter === 1) {
-      return;
-    }
-    setCounter(counter - 1);
-  };
 
   //filtrar el Linkbar por título, y por precio
   const handleOnChange = () => {
     // const inputBar = e.target.value;
     // return productList.filter((each) => each.title.includes(inputBar));
   };
+  const addToCart = ({title, description, id, image, price, counter}: any) => {
+    const cartData = !!cart.find((item: any) => item.id === id);
 
-  //verificar si se repiten los productos. Si se repiten agregar al counter la cantidad de veces
-  //al abrir el modal se deben ver los productos con el counter modificado (si se repiten)
-  //el nuevo counter (que tiene los que se repetien y los que no) se incorpora en setList
-
-  //cartList es una función que se ejecuta cuando se clickea el botón del cart en el navbar
+    console.log(cartData);
+    if (!cartData) {
+      setCart((prev: any) => {
+        return [
+          ...prev,
+          {
+            title,
+            description,
+            id,
+            image,
+            price,
+            counter: counter,
+          },
+        ];
+      });
+    }
+    if (cartData) {
+      setCart((prev: any) => {
+        return [
+          ...prev,
+          {
+            counter: ++counter,
+            total: counter * price,
+          },
+        ];
+      });
+    }
+  };
 
   return (
     <div className="h-full bg-black">
@@ -56,7 +72,7 @@ const Home: NextPage = () => {
           <Image alt="basement-supply" src={imageheader} />
         </div>
       </header>
-      <div className="border-t-2 border-b-2 mt-2  mb-12 md:mt-14 md:mb-24 ">
+      <div className="border-t-2 border-b-2 mt-2 mb-12 md:mt-14 md:mb-24 ">
         <p className="text-xl  md:text-4xl">A man can´t have enough basement. swang -</p>
       </div>
       <main className="h-auto justify-items-center grid md:grid-cols-3 mx-4 md:mx-8 space-x-4 md:space-x-8">
@@ -66,11 +82,13 @@ const Home: NextPage = () => {
           return (
             <div key={id} className="h-full">
               <Product
+                addToCart={addToCart}
+                cart={cart}
                 counter={counter}
                 description={description}
+                id={id}
                 image={image}
                 price={price}
-                setCart={setCart}
                 setOpen={setOpen}
                 title={title}
               />
@@ -80,10 +98,10 @@ const Home: NextPage = () => {
         <div>
           <CartModal open={open} setOpen={setOpen}>
             <Cart
-              add={add}
+              addToCart={addToCart}
               cart={cart}
               counter={counter}
-              less={less}
+              setCounter={setCounter}
               setList={setList}
               setOpen={setOpen}
             />
