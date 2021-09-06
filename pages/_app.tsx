@@ -7,7 +7,7 @@ function App({Component, pageProps}: AppProps) {
   return (
     <>
       <Head>
-        <title>Basement Supply</title>
+        <title>Basement Supply (Angela)</title>
         <meta content="Coding challenge for basement.studio." name="description" />
       </Head>
       <Component {...pageProps} />
