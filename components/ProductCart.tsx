@@ -7,7 +7,6 @@ interface ProductCartProps {
   description: string;
   image: string;
   addToCart: any;
-  total: number;
   id: number;
   counter: number;
   setCounter: any;
@@ -23,13 +22,16 @@ const ProductCart = ({
   addToCart,
 }: ProductCartProps) => {
   const less = () => {
-    if (counter === 1) {
+    if (counter >= 1) {
       return;
     }
-    addToCart({title, image, price, id, description, counter: counter - 1});
+    setCounter(counter - 1);
   };
   const add = () => {
-    addToCart({title, image, price, id, description, counter: counter + 1});
+    if (counter >= 1) {
+      return;
+    }
+    setCounter(counter + 1);
   };
 
   return (
