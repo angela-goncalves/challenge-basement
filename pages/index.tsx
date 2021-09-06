@@ -29,7 +29,7 @@ const Home: NextPage = () => {
   //filtrar el Linkbar por título, y por precio
   const handleOnChange = () => {
     // const inputBar = e.target.value;
-    // return productList.filter((each) => each.title.includes(inputBar));
+    // return getList.filter((each) => each.title.includes(inputBar));
   };
   const addToCart = ({title, description, id, image, price, counter}: any) => {
     const cartData = !!cart.find((item: any) => item.id === id);
@@ -45,18 +45,8 @@ const Home: NextPage = () => {
             id,
             image,
             price,
-            counter: counter,
-          },
-        ];
-      });
-    }
-    if (cartData) {
-      setCart((prev: any) => {
-        return [
-          ...prev,
-          {
-            counter: ++counter,
-            total: counter * price,
+            counter,
+            total: price * counter,
           },
         ];
       });
