@@ -72,8 +72,19 @@ const Home: NextPage = () => {
           <Image alt="basement-supply" src={imageheader} />
         </div>
       </header>
-      <div className="border-t-2 border-b-2 mt-2 mb-12 md:mt-14 md:mb-24 ">
-        <p className="text-xl  md:text-4xl">A man can´t have enough basement. swang -</p>
+      <div className="relative overflow-x-hidden">
+        <div className="border-t-2 border-b-2 mt-2 mb-12 md:mt-14 md:mb-24">
+          <div className="animate-marquee whitespace-nowrap">
+            <span className="text-xl md:text-4xl mx-4">
+              A man can´t have enough basement swang - A man can´t have enough basement swang -
+            </span>
+          </div>
+        </div>
+        <div className="absolute top-14 animate-marquee2 whitespace-nowrap">
+          <span className="text-xl md:text-4xl mx-4">
+            A man can´t have enough basement swang - A man can´t have enough basement swang -
+          </span>
+        </div>
       </div>
       <main className="h-auto justify-items-center grid md:grid-cols-3 mx-4 md:mx-8 space-x-4 md:space-x-8">
         {getList.map((product: any) => {
