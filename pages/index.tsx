@@ -1,6 +1,7 @@
 import type {NextPage} from "next";
 import Image from "next/image";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
+import type {GetStaticProps} from "next";
 
 import Cart from "../components/Cart";
 import CartModal from "../components/CartModal";
@@ -9,54 +10,64 @@ import footer from "../public/footer.svg";
 import imageheader from "../public/header.svg";
 import Product from "../components/Product";
 import Navbar from "../components/Navbar";
-const Home: NextPage = () => {
-  const [counter, setCounter] = useState(1);
+import {ProductType} from "../product/types";
+
+export const getStaticProps: GetStaticProps<any> = async () => {
+  const products = await import("../product/mock.json").then((res) => res.default);
+
+  return {
+    props: {
+      products,
+    },
+  };
+};
+
+const Home: NextPage = ({products}: any) => {
   const [open, setOpen] = useState(false);
-  const [getList, setList] = useState([]);
   const [cart, setCart] = useState<any>([]);
-
-  useEffect(() => {
-    const productData = async () => {
-      const response = await fetch("/api/products");
-      const data = await response.json();
-
-      setList(data);
-    };
-
-    productData();
-  }, []);
-
   //filtrar el Linkbar por título, y por precio
   const handleOnChange = () => {
     // const inputBar = e.target.value;
     // return getList.filter((each) => each.title.includes(inputBar));
   };
-  const addToCart = ({title, description, id, image, price, counter}: any) => {
-    const cartData = !!cart.find((item: any) => item.id === id);
+  const totalCounter = cart.reduce((a: any, b: any) => a + b.counter, 0);
 
-    console.log(cartData);
-    if (!cartData) {
-      setCart((prev: any) => {
-        return [
-          ...prev,
-          {
-            title,
-            description,
-            id,
-            image,
-            price,
-            counter,
-            total: price * counter,
-          },
-        ];
-      });
-    }
+  console.log(totalCounter);
+  const addToCart = ({title, id, price, description, counter, image}: ProductType) => {
+    const bascket = () => {
+      const find = cart.findIndex((ele: any) => id === ele.id);
+
+      if (find >= 0) {
+        let copy = [...cart];
+
+        copy[find].counter += 1;
+
+        return copy;
+      }
+
+      console.log(find);
+
+      return [
+        ...cart,
+        {
+          title,
+          description,
+          price,
+          image,
+          id,
+          counter: counter,
+          total: price * counter,
+        },
+      ];
+    };
+
+    setCart(bascket);
   };
 
   return (
     <div className="h-full bg-black">
       <Linkbar handleOnChange={handleOnChange} />
-      <Navbar counter={counter} />
+      <Navbar counter={totalCounter} setOpen={setOpen} />
       <header className="m-auto text-white text-center">
         <div className="mx-4 md:m-0">
           <Image alt="basement-supply" src={imageheader} />
@@ -77,35 +88,22 @@ const Home: NextPage = () => {
         </div>
       </div>
       <main className="h-auto justify-items-center grid md:grid-cols-3 mx-4 md:mx-8 space-x-4 md:space-x-8">
-        {getList.map((product: any) => {
-          const {title, image, id, price, description} = product;
-
+        {products.map((product: any) => {
           return (
-            <div key={id} className="h-full">
+            <div key={product.id} className="h-full">
               <Product
                 addToCart={addToCart}
                 cart={cart}
-                counter={counter}
-                description={description}
-                id={id}
-                image={image}
-                price={price}
+                product={product}
+                setCart={setCart}
                 setOpen={setOpen}
-                title={title}
               />
             </div>
           );
         })}
         <div>
           <CartModal open={open} setOpen={setOpen}>
-            <Cart
-              addToCart={addToCart}
-              cart={cart}
-              counter={counter}
-              setCounter={setCounter}
-              setList={setList}
-              setOpen={setOpen}
-            />
+            <Cart cart={cart} setCart={setCart} setOpen={setOpen} />
           </CartModal>
         </div>
       </main>

@@ -1,33 +1,17 @@
 import Image from "next/image";
-import React, {FC} from "react";
+import React from "react";
 
 import close from "../public/close.svg";
 import yourCart from "../public/yourCart.svg";
 import yourcart from "../public/your-cart.svg";
+import {ProductType} from "../product/types";
 
 import ProductCart from "./ProductCart";
 
-interface CartProps {
-  setOpen: any;
-  addToCart: any;
-  counter: number;
-  setList: any;
-  cart: any;
-  setCounter: any;
-}
-const Cart: FC<CartProps> = ({setOpen, addToCart, cart, setCounter}) => {
-  console.log(cart);
-  const allTotals = () => {
-    const totals = cart.map((e: any) => e.total);
-
-    if (totals.length > 0) {
-      const reducer = (a: any, b: any) => a + b;
-
-      return totals.reduce(reducer, 0);
-    }
-  };
-
-  console.log(allTotals());
+const Cart = ({setOpen, cart, addToCart, setCart, counter}: ProductType) => {
+  const totalOnly = cart
+    .map((elem: any) => elem.total * elem.counter)
+    .reduce((a: any, b: any) => a + b, 0);
 
   return (
     <div className="md:px-8 md:pt-8 flex flex-col justify-center md:border-l-2 md:border-b-2 overscroll-auto h-screen">
@@ -43,20 +27,15 @@ const Cart: FC<CartProps> = ({setOpen, addToCart, cart, setCounter}) => {
         </div>
       </div>
       <div className="overflow-y-auto">
-        {cart.map((products: any) => {
-          const {title, image, price, description, id, counter} = products;
-
+        {cart.map((product: any, index: any) => {
           return (
-            <div key={id} className="mb-4">
+            <div key={index} className="mb-4">
               <ProductCart
                 addToCart={addToCart}
+                cart={cart}
                 counter={counter}
-                description={description}
-                id={id}
-                image={image}
-                price={price}
-                setCounter={setCounter}
-                title={title}
+                product={product}
+                setCart={setCart}
               />
             </div>
           );
@@ -65,7 +44,7 @@ const Cart: FC<CartProps> = ({setOpen, addToCart, cart, setCounter}) => {
       <div className="w-full flex flex-col mt-14 md:mt-40 md:flex-row md:items-center md:border-t-2">
         <div className="w-full flex justify-between items-center text-xl px-4 ">
           <h3 className="md:py-6 md:pl-8 md:text-4xl">Total:</h3>
-          <p className="md:text-4xl">{allTotals()}</p>
+          <p className="md:text-4xl">{totalOnly}</p>
         </div>
         <button className="text-5xl font-bold md:text-4xl text-center border-t-2 md:border-l-2 md:border-0 pt-2 md:px-8">
           CHECKOUT

@@ -1,37 +1,33 @@
 import Image from "next/dist/client/image";
 import React from "react";
 
-interface ProductCartProps {
-  title: string;
-  price: number;
-  description: string;
-  image: string;
-  addToCart: any;
-  id: number;
-  counter: number;
-  setCounter: any;
-}
-const ProductCart = ({
-  title,
-  description,
-  price,
-  id,
-  image,
-  counter,
-  setCounter,
-  addToCart,
-}: ProductCartProps) => {
-  const less = () => {
-    if (counter >= 1) {
-      return;
-    }
-    setCounter(counter - 1);
-  };
+import {ProductType} from "../product/types";
+
+const ProductCart = ({product, cart, setCart}: ProductType) => {
+  const {title, description, counter, image, id, price} = product;
+
+  //as the counter here is a copy of the State counter, so we need to get access to cart to get it out
   const add = () => {
-    if (counter >= 1) {
-      return;
-    }
-    setCounter(counter + 1);
+    const addOne = cart.map((el: any) => {
+      if (id === el.id) {
+        return {...el, counter: counter + 1};
+      }
+
+      return el;
+    });
+
+    setCart(addOne);
+  };
+  const less = () => {
+    const subsOne = cart.map((el: any) => {
+      if (id === el.id) {
+        return {...el, counter: counter - 1};
+      }
+
+      return el;
+    });
+
+    setCart(subsOne);
   };
 
   return (
@@ -73,7 +69,7 @@ const ProductCart = ({
                 </div>
               </div>
             </div>
-            <p className="text-lg md:text-4xl md:self-end">${price}</p>
+            <p className="text-lg md:text-4xl md:self-end">${price * counter}</p>
           </div>
         </div>
       </div>
