@@ -3,12 +3,20 @@ import React from "react";
 
 import {ProductType} from "../product/types";
 
-const Product = ({setOpen, product, addToCart, counter}: ProductType) => {
+const Product = ({setOpen, product, addToCart}: ProductType) => {
   const {title, image, price, description, id} = product;
   const handleOnClick = () => {
-    addToCart({title, image, price, description, id, counter});
+    addToCart({title, image, price, description, id, counter: 1});
     setOpen(true);
+    // const filtered = cart.filter((product: any) => product.id === 1);
+    // const mapp = filtered.map((el: any) => el.counter + 1);
+
+    // console.log(mapp);
+
+    // setCounter(mapp);
   };
+
+  // console.log(product);
 
   return (
     <div className="h-full">

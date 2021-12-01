@@ -23,7 +23,6 @@ export const getStaticProps: GetStaticProps<any> = async () => {
 };
 
 const Home: NextPage = ({products}: any) => {
-  const [counter, setCounter] = useState(0);
   const [open, setOpen] = useState(false);
   const [cart, setCart] = useState<any>([]);
   //filtrar el Linkbar por título, y por precio
@@ -31,12 +30,22 @@ const Home: NextPage = ({products}: any) => {
     // const inputBar = e.target.value;
     // return getList.filter((each) => each.title.includes(inputBar));
   };
+  const totalCounter = cart.reduce((a: any, b: any) => a + b.counter, 0);
 
+  console.log(totalCounter);
   const addToCart = ({title, id, price, description, counter, image}: ProductType) => {
     const bascket = () => {
-      const find = cart.find((ele: any) => id === ele.id);
+      const find = cart.findIndex((ele: any) => id === ele.id);
 
-      if (find) return [...cart];
+      if (find >= 0) {
+        let copy = [...cart];
+
+        copy[find].counter += 1;
+
+        return copy;
+      }
+
+      console.log(find);
 
       return [
         ...cart,
@@ -46,7 +55,7 @@ const Home: NextPage = ({products}: any) => {
           price,
           image,
           id,
-          counter: ++counter,
+          counter: counter,
           total: price * counter,
         },
       ];
@@ -58,7 +67,7 @@ const Home: NextPage = ({products}: any) => {
   return (
     <div className="h-full bg-black">
       <Linkbar handleOnChange={handleOnChange} />
-      <Navbar counter={counter} setOpen={setOpen} />
+      <Navbar counter={totalCounter} setOpen={setOpen} />
       <header className="m-auto text-white text-center">
         <div className="mx-4 md:m-0">
           <Image alt="basement-supply" src={imageheader} />
@@ -84,8 +93,9 @@ const Home: NextPage = ({products}: any) => {
             <div key={product.id} className="h-full">
               <Product
                 addToCart={addToCart}
-                counter={counter}
+                cart={cart}
                 product={product}
+                setCart={setCart}
                 setOpen={setOpen}
               />
             </div>
@@ -93,13 +103,7 @@ const Home: NextPage = ({products}: any) => {
         })}
         <div>
           <CartModal open={open} setOpen={setOpen}>
-            <Cart
-              cart={cart}
-              counter={counter}
-              setCart={setCart}
-              setCounter={setCounter}
-              setOpen={setOpen}
-            />
+            <Cart cart={cart} setCart={setCart} setOpen={setOpen} />
           </CartModal>
         </div>
       </main>

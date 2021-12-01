@@ -9,11 +9,9 @@ import {ProductType} from "../product/types";
 import ProductCart from "./ProductCart";
 
 const Cart = ({setOpen, cart, addToCart, setCart, counter}: ProductType) => {
-  const totalOnly = cart.map((elem: any) => elem.total * elem.counter);
-
-  const reducer = totalOnly.reduce((a: any, b: any) => a + b, 0);
-
-  console.log(reducer);
+  const totalOnly = cart
+    .map((elem: any) => elem.total * elem.counter)
+    .reduce((a: any, b: any) => a + b, 0);
 
   return (
     <div className="md:px-8 md:pt-8 flex flex-col justify-center md:border-l-2 md:border-b-2 overscroll-auto h-screen">
@@ -46,7 +44,7 @@ const Cart = ({setOpen, cart, addToCart, setCart, counter}: ProductType) => {
       <div className="w-full flex flex-col mt-14 md:mt-40 md:flex-row md:items-center md:border-t-2">
         <div className="w-full flex justify-between items-center text-xl px-4 ">
           <h3 className="md:py-6 md:pl-8 md:text-4xl">Total:</h3>
-          <p className="md:text-4xl">{reducer}</p>
+          <p className="md:text-4xl">{totalOnly}</p>
         </div>
         <button className="text-5xl font-bold md:text-4xl text-center border-t-2 md:border-l-2 md:border-0 pt-2 md:px-8">
           CHECKOUT
